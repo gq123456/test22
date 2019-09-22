@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=yes" />
+		
+		<title></title>
+			<script src="js/jquery-3.3.1.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/animate.css" />
+		<style>html,
+body {
+	height: 100%;
+	overflow: hidden;
+	margin: 0px;
+	padding: 0px;
+	background-color: #efeff4;
+}
+
+.ui-logo {
+	width: 100px;
+	height: 100px;
+	margin: 60px auto 25px auto;
+	background-image: url(images/user-photo.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	border-radius: 60px;
+}
+
+.mui-content-padded {
+	margin-top: 20px;
+}
+
+.ui-login-form {
+	border: solid 1px #ddd;
+	border-radius: 5px;
+	margin: 10px;
+	overflow: hidden;
+	background-color: #ddd;
+}
+
+.ui-login-form input {
+	border: none;
+	margin: 0px;
+	font-size: 18px;
+	padding: 15px !important;
+	border-radius: 0px;
+	height: auto;
+}
+
+.ui-login-form input:first-child {
+	margin-bottom: 1px;
+}
+
+.mui-btn-block {
+	padding: 12px 0px;
+}
+
+#reg {
+	display: block;
+	margin-top: 45px;
+	text-align: center;
+}
+
+.mui-checkbox label {
+	display: inline-block;
+	width: auto;
+	vertical-align: text-bottom;
+	padding: 2px 0px;
+	color: #777;
+}
+
+.mui-checkbox input {
+	position: relative !important;
+	top: auto!important;
+	left: auto!important;
+	right: auto!important;
+	bottom: auto!important;
+	margin: 0px;
+	padding: 0px;
+	vertical-align: text-bottom;
+}
+
+.mui-checkbox {
+	margin: 3px 10px;
+}
+
+.mui-mask {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: #007AFF;
+	z-index: 9999;
+	opacity: 0.5;
+	display: none;
+}
+
+.fi {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+}</style>
+		<script>$(document).ready(function() {
+	$("#login").click(function() {
+		var account = document.getElementById("account").value
+		var password = document.getElementById("password").value
+		if(account != "" & password != "") {
+
+			$.ajax({
+				type: "post",
+				url: "http://10.3.105.117:8080/spring-mybatis/delu",
+				//url:"http://10.7.129.37:8080/spring-mybatis/delu",
+				//url:"http://192.168.43.128:8080/spring-mybatis/delu",
+				data: {
+					"account": account,
+					"password": password,
+				},
+				dataType: 'json',
+				//timeout:'50000',
+				success: function(result) {
+					console.log(result)
+						//alert(result)
+					if(result == "登录成功") {
+						window.location.href = 'nav.html'
+					} else {
+						alert(result)
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					// 状态码
+					console.log(JSON.stringify(XMLHttpRequest));
+					// 状态
+					console.log(errorThrown);
+					// 错误信息   
+					console.log(textStatus);
+				}
+			});
+		} else {
+			alert("每一项都不能为空")
+		}
+	});
+
+});
+
+function get() {
+	alert(1)
+}</script>
+	</head>
+
+	<body>
+		<div class="mui-mask">
+		<div class="fi spinner3"><div class="dot1"></div><div class="dot2"></div></div>
+	</div>
+		<div class="mui-content animated zoomIn">
+			<div class="ui-logo"></div>
+			<form class="ui-login-form" onsubmit="return false">
+				<input id='account' type="text" class="mui-input-clear mui-input" placeholder="账号">
+				<input id='password' type="password" class="mui-input-clear mui-input" placeholder="密码">
+			</form>
+		
+			<div class="mui-content-padded">
+				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+			</div>
+			
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">//超时时间设置为8秒；
+var TIMEOUT = 5000;
+var w;
+mui.init();
+var success = function(responseData) {
+	//var resObj = JSON.parse(responseData);
+	//console.log(responseData);
+	if(responseData == "1") {
+		//respnoseEl.innerHTML = responseData.info;
+		if(autoLoginButton.checked) {
+			localStorage.setItem("$state", "Y");
+			localStorage.setItem("$acount", accountBox.value);
+			localStorage.setItem("$password", passwordBox.value);
+		} else {
+			localStorage.removeItem("$state");
+			localStorage.removeItem("$acount");
+			localStorage.removeItem("$password");
+		}
+		plus.storage.setItem("username", username);
+		plus.storage.setItem("old_password", password);
+		plus.storage.setItem("new_password", password);
+		//plus.storage.setItem("real_name", responseData.data['real_name']);
+		plus.storage.setItem("islogin", "1");
+		document.getElementById("btn_submit").disabled = false;
+		w.close();
+		mui.openWindow({
+			id: 'nav.html',
+			url: 'nav.html',
+			show: {
+				autoShow: true, //页面loaded事件发生后自动显示，默认为true
+				aniShow: "slide-in-left", //页面显示动画，默认为”slide-in-right“；
+				duration: 500 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+			},
+			waiting: {
+				autoShow: true,
+				title: '正在加载...',
+			}
+		});
+
+	} else {
+		//respnoseEl.innerHTML = responseData;
+		plus.nativeUI.alert("用户名或密码错误！");
+		document.getElementById("btn_submit").disabled = false;
+
+	}
+};
+mui.plusReady(function() {
+	//				document.getElementById("login").addEventListener('tap', function() {
+	//					alert(1)
+	//					mui.ajax("http://10.7.129.33:8080/spring-mybatis/delu", {
+	//							type: 'post', //HTTP请求类型
+	//							data: {
+	//							"account": accountBox.value,
+	//							"password": passwordBox.value
+	//						},
+	//						datatype:'json',
+	//						//post方式发送的数据，get只能用?&方式
+	//						success: function(responseData) {
+	//                              alert(responseData)
+	//					}
+	//				});
+	//			});
+	//document.getElementsByClassName("mui-mask")[0].style.visibility='hidden';
+	var loginButton = document.querySelector('#login');
+	var accountBox = document.querySelector('#account');
+	var passwordBox = document.querySelector('#password');
+	var autoLoginButton = document.querySelector("#autoLogin");
+
+	//plus.nativeUI.alert("112");
+	//plus.nativeUI.alert(localStorage.getItem("$state")+",123");
+	if(localStorage.getItem("$state") != null) {
+		accountBox.value = localStorage.getItem("$acount");
+		passwordBox.value = localStorage.getItem("$password");
+		autoLoginButton.checked = true;
+	}
+
+	//plus.nativeUI.alert("112");
+	//获取href
+
+});
+//处理逻辑：1秒内，连续两次按返回键，则退出应用；
+var first = null;
+mui.back = function() {
+
+	//首次按键，提示‘再按一次退出应用’
+	if(!first) {
+		first = new Date().getTime();
+		mui.toast('再按一次退出应用');
+		setTimeout(function() {
+			first = null;
+		}, 1000);
+	} else {
+		if(new Date().getTime() - first < 1000) {
+			plus.runtime.quit();
+		}
+	}
+
+};</script>
+	</body>
+
+</html>

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="js/tinybox.js"></script>
+-	<script type="text/javascript">
+			function focusAppointInput(inputId)
+			{
+				var inputs=document.getElementById(inputId);
+				  if(inputId=="rksl")
+			     {
+			       getcangku();
+     getunit();
+			     }
+			     if(inputId=="save")
+			     {
+			     	save();
+			     }
+				inputs.focus();
+			}
+		</script>
+			<script>
+			function save() {
+			
+				var item_code = document.getElementById("item_code").value
+					var pjrq = document.getElementById("pjrq").value
+					var item_name = document.getElementById("item_name").value
+					var metering_unit = document.getElementById("metering_unit").value
+					var ck = document.getElementById("ck").value
+					var kq = document.getElementById("kq").value
+					var kw = document.getElementById("kw").value
+					var jth = document.getElementById("jth").value
+					var rksl = document.getElementById("rksl").value
+						var scdd = document.getElementById("scdd").value
+						
+					if(item_code != "" & pjrq!=" " & item_name != "" & metering_unit != "" & ck != "" & kq != "" &
+						kw != "" & jth != "" & rksl != "" &  scdd != "" ) {
+
+						$.post("http://10.3.105.117:8080/spring-mybatis/productruku", {
+							"item_code": item_code,
+							"pjrq": pjrq,
+							"item_name": item_name,
+							"metering_unit": metering_unit,
+							"ck": ck,
+							"kq": kq,
+							"kw": kw,
+							"jth": jth,
+							"rksl": rksl,
+							"scdd": scdd,
+						
+						}, function(data) {
+							if(data != null) {
+								alert("保存成功")
+								window.location.href="produteruku.html"
+							}
+						}, 'json');
+
+					} else {
+						alert("每一项都不能为空")
+					}
+
+			
+
+			}
+		</script>
+			<script>
+			function gettiaoxingma() {
+				//	document.getElementById("tiao").innerHTML=plus.storage.getItem("result");
+			var tiao = document.getElementById("tiao").value
+				var b = tiao.split("-");
+				$("#jth").val(b[0]);
+					$("#item_code").val(b[1]);
+						$("#pjrq").val(b[2]);
+						$("#scdd").val(b[3]);
+
+				//从条形码中获取相应字段
+
+			}
+		</script>
+		<script>
+		
+		
+			$(document).ready(function() {
+					$('#tiao').focus();
+				document.onkeypress = function (e) { // 回车提交表单
+// 兼容FF和IE和Opera
+    var theEvent = window.event || e;
+    var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+    if (code == 13) {
+     gettiaoxingma();
+    }
+}
+				$("#home").click(function() {
+					window.location.href = 'nav.html';
+				});
+
+				$("#save").click(function() {
+
+					var item_code = document.getElementById("item_code").value
+					var pjrq = document.getElementById("pjrq").value
+					var item_name = document.getElementById("item_name").value
+					var metering_unit = document.getElementById("metering_unit").value
+					var ck = document.getElementById("ck").value
+					var kq = document.getElementById("kq").value
+					var kw = document.getElementById("kw").value
+					var jth = document.getElementById("jth").value
+					var rksl = document.getElementById("rksl").value
+						var scdd = document.getElementById("scdd").value
+						
+					if(item_code != "" & pjrq!=" " & item_name != "" & metering_unit != "" & ck != "" & kq != "" &
+						kw != "" & jth != "" & rksl != "" &  scdd != "" ) {
+
+						$.post("http://10.3.105.117:8080/spring-mybatis/productruku", {
+							"item_code": item_code,
+							"pjrq": pjrq,
+							"item_name": item_name,
+							"metering_unit": metering_unit,
+							"ck": ck,
+							"kq": kq,
+							"kw": kw,
+							"jth": jth,
+							"rksl": rksl,
+							"scdd": scdd,
+						
+						}, function(data) {
+							if(data != null) {
+								alert("保存成功")
+								window.location.href="produteruku.html"
+							}
+						}, 'json');
+
+					} else {
+						alert("每一项都不能为空")
+					}
+
+				});
+
+			});
+		</script>
+	
+		<script>
+			function getone() {
+				window.location.href = 'cangkusaomiao.html#tiao=' + document.getElementById("tiao").value;
+			}
+		</script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script type="text/javascript" charset="utf-8">
+			var url = "http://10.3.41.14:894/web/UpLoad_Pic.aspx";
+			var config = {};
+			config.pics = [];
+			config.GZXX = "";
+			config.SCCJ = "";
+			config.SCPC = "";
+			config.Date = "";
+			config.SCSL = "";
+			config.GZSL = "";
+			config.BL = "";
+			config.XT = "";
+			config.FKRY = "";
+			config.SCX = "";
+			config.XZ = "";
+			config.SSLX = "";
+			config.SSSJ = "";
+			config.SSRS = "";
+
+			mui.init();
+			mui.plusReady(function() {
+
+				var d = new Date();
+				var day = d.getDate();
+				var month = d.getMonth() + 1;
+				var year = d.getFullYear();
+				config.user = plus.storage.getItem("username");
+
+			});
+			//保存数据
+			document.getElementById("save1").addEventListener("tap", function(e) {
+				if(document.getElementById("tiao").value == "") {
+					alert("条形码不能为空");
+					return;
+				} else {
+					config.wuliaodaima = document.getElementById("wuliaodaima").value;
+				}
+				if(document.getElementById("wuliaodaima").value == "") {
+					alert("物料代码不能为空！");
+					return;
+				} else {
+					config.wuliaodaima = document.getElementById("wuliaodaima").value;
+				}
+				if(document.getElementById("gysdaima").value == "") {
+					alert("供应商代码不能为空！");
+					return;
+				} else {
+					config.gysdaima = document.getElementById("gysdaima").value;
+				}
+				if(document.getElementById("ruku").value == "") {
+					alert("入库仓库！");
+					return;
+				} else {
+					config.ruku = document.getElementById("ruku").value;
+				}
+				if(document.getElementById("rukukuqu").value == "") {
+					alert("入库库区不能为空！");
+					return;
+				} else {
+					config.rukukuqu = document.getElementById("rukukuqu").value;
+				}
+				if(document.getElementById("rukukuwei").value == "") {
+					alert("入库库位不能为空！");
+					return;
+				} else {
+					config.rukukuwei = document.getElementById("rukukuwei").value;
+				}
+				if(document.getElementById("rukunumber").value == "") {
+					alert("入库数量不能为空！");
+					return;
+				} else {
+					config.rukunumber = document.getElementById("rukunumber").value;
+				}
+
+				if(document.getElementById("picinumber").value == "") {
+					alert("批次号不能为空！");
+					return;
+				} else {
+					config.picinumber = document.getElementById("picinumber").value;
+				}
+				if(document.getElementById("liaodannumber").value == "") {
+					alert("料单编号不能为空！");
+					return;
+				} else {
+					config.liaodannumber = document.getElementById("liaodannumber").value;
+				}
+				if(document.getElementById("JZYF").value == "") {
+					alert("记账月份！");
+					return;
+				} else {
+					config.JZYF = document.getElementById("JZYF").value;
+				}
+				var w = plus.nativeUI.showWaiting("等待中...");
+
+				var task = plus.uploader.createUpload("http://192.168.43.128:8080/spring-mybatis/save", {}, function(t, status) {
+					// 上传完成
+					if(status == 200) {
+
+						w.close();
+						alert("Upload success: " + t.url);
+						mui.openWindow({
+							id: 'nav.html',
+							url: 'nav.html',
+							show: {
+								autoShow: true, //页面loaded事件发生后自动显示，默认为true
+								aniShow: "slide-in-left", //页面显示动画，默认为”slide-in-right“；
+								duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+							},
+							waiting: {
+								autoShow: true,
+								title: '正在加载...',
+							}
+						});
+
+					} else {
+						w.close();
+						alert("Upload failed: " + status);
+					}
+				});
+				var imgs = document.getElementsByTagName("ul")[0].getElementsByTagName("img");
+				for(var i = 0; i < imgs.length; i++) {
+					task.addFile(imgs[i].src, {});
+				}
+				task.addData("string_key", JSON.stringify(config));
+				task.start();
+				//alert(JSON.stringify(config));
+
+			});
+			//设置时间
+			var temp_month = "" + String(month).length == 1 ? ("0" + String(month)) : String(month);
+			var temp_day = "" + String(day).length == 1 ? ("0" + String(day)) : String(day);
+			document.getElementById("Date").value = String(year) + temp_month + temp_day;
+			document.getElementById("Get_Date").addEventListener('tap', function() {
+				var dDate = new Date();
+				dDate.setFullYear(2014, 7, 16);
+				var minDate = new Date();
+				minDate.setFullYear(2010, 0, 1);
+				var maxDate = new Date();
+				maxDate.setFullYear(2050, 11, 31);
+				plus.nativeUI.pickDate(function(e) {
+					var d = e.date;
+					document.getElementById("Date").value = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+				}, function(e) {
+					document.getElementById("Date").value = "您没有选择日期";
+				}, {
+					title: "请选择日期",
+					minDate: minDate,
+					maxDate: maxDate
+				});
+			});
+
+			//拍照
+			document.getElementById("photo_capture").addEventListener("tap", function() {
+				var cmr = plus.camera.getCamera();
+				var res = cmr.supportedImageResolutions[0];
+				var fmt = cmr.supportedImageFormats[0];
+				//alert(fmt);
+				cmr.captureImage(function(path) {
+						alert("Capture image success: " + path);
+						alert('file://' + plus.io.convertLocalFileSystemURL(path));
+						var tmp_li = document.createElement("li");
+						tmp_li.className += "mui-table-view-cell mui-media mui-col-xs-6";
+						tmp_li.innerHTML = '<img class="mui-media-object" src="">' +
+							'<div><input type="button" class="del" name="删除"  value="删除"/></div>';
+						//alert(tmp_li.className);
+						document.getElementsByTagName('ul')[0].appendChild(tmp_li);
+						tmp_li.getElementsByTagName('img')[0].src = 'file://' + plus.io.convertLocalFileSystemURL(path);
+						//document.getElementById("Test_Picture").src=entries[i].toLocalURL();
+						tmp_li.getElementsByClassName('del')[0].addEventListener('tap', function(e) {
+							this.parentElement.parentElement.parentElement.removeChild(this.parentElement.parentElement);
+
+						});
+
+						document.getElementById("container_pic").style.display = 'block';
+						/*
+		plus.io.requestFileSystem( plus.io.PUBLIC_DOWNLOADS, function( fs ) {
+							var directoryReader = fs.root.createReader();
+		directoryReader.readEntries( function( entries ){			
+			var i;
+			alert(entries.length);
+			for( i=0; i < entries.length; i++ ) {				
+					alert(entries[i].name);
+				var tmp_li=document.createElement("li");
+				tmp_li.className+="mui-table-view-cell mui-media mui-col-xs-6";
+				tmp_li.innerHTML='<img class="mui-media-object" src="">'+
+		                '<div><input type="button" class="del" name="删除"  value="删除"/></div>';
+		              //alert(tmp_li.className);
+		                //document.getElementsByTagName('ul')[0].appendChild(tmp_li);
+		                tmp_li.getElementsByTagName('img')[0].src=entries[i].toLocalURL();
+		                //document.getElementById("Test_Picture").src=entries[i].toLocalURL();
+		                tmp_li.getElementsByClassName('del')[0].addEventListener('tap',function(e){
+      			      			this.parentElement.parentElement.parentElement.removeChild(this.parentElement.parentElement);
+				
+			});
+			
+			
+		               }
+			document.getElementById("container_pic").style.display='block';
+		}, function ( e ) {
+			alert( "Read entries failed: " + e.message );
+		} );
+	} );
+		
+		*/
+					},
+					function(error) {
+						alert("Capture image failed: " + error.message);
+					}, {
+						resolution: res,
+						format: fmt,
+						filename: '_downloads/'
+					}
+				);
+			});
+
+			document.getElementById("LJ").addEventListener("tap", function(e) {
+				/*	var $li='<li class="mui-table-view-cell mui-media mui-col-xs-6">'+
+		                '<img class="mui-media-object" src="" id="Test_Picture">'+
+		                '<div><input type="button" class="del" name="删除" id="delete" value="删除"/></div>'+
+		                '</li>';
+		                alert($li);
+		           */
+				plus.io.requestFileSystem(plus.io.PUBLIC_DOWNLOADS, function(fs) {
+					var directoryReader = fs.root.createReader();
+					directoryReader.readEntries(function(entries) {
+						var i;
+						alert(entries.length);
+						alert(config.y);
+						for(i = 0; i < entries.length; i++) {
+							//var tmp_li=document.createElement("li");
+							//tmp_li.className+="mui-table-view-cell mui-media mui-col-xs-6";
+							//tmp_li.innerHTML='<img class="mui-media-object" src="">'+
+							// '<div><input type="button" class="del" name="删除"  value="删除"/></div>';
+							//alert(tmp_li.className);
+							// document.getElementsByTagName('ul')[0].appendChild(tmp_li);
+							// tmp_li.getElementsByTagName('img')[0].src=entries[i].toLocalURL();
+							//document.getElementById("Test_Picture").src=entries[i].toLocalURL();
+							// tmp_li.getElementsByClassName('del')[0].addEventListener('tap',function(e){
+							//this.parentElement.parentElement.parentElement.removeChild(this.parentElement.parentElement);
+
+							//alert( entries[i].toLocalURL() );
+							//entries[i].remove();
+							//});
+							entries[i].remove();
+						}
+						//document.getElementById("container_pic").style.display='block';
+					}, function(e) {
+						alert("Read entries failed: " + e.message);
+					});
+				});
+			});
+
+			/*   	document.getElementById("LJ").addEventListener("tap",function(e){
+      			var $li='<li class="mui-table-view-cell mui-media mui-col-xs-6">'+
+		                '<img class="mui-media-object" src="" id="Test_Picture">'+
+		                '<div><input type="button" class="del" name="删除" id="delete" value="删除"/></div>'+
+		                '</li>';
+		                alert($li);
+		                
+      			plus.io.requestFileSystem( plus.io.PUBLIC_DOWNLOADS, function( fs ) {
+							var directoryReader = fs.root.createReader();
+		directoryReader.readEntries( function( entries ){			
+			var i;
+			for( i=0; i < entries.length; i++ ) {
+				var tmp_li=document.createElement("li");
+				tmp_li.className+="mui-table-view-cell mui-media mui-col-xs-6";
+				tmp_li.innerHTML='<img class="mui-media-object" src="" id="Test_Picture">'+
+		                '<div><input type="button" class="del" name="删除" id="delete" value="删除"/></div>';
+		                document.getElementsByName("ul").appendChild(tmp_li);
+		                document.getElementById("Test_Picture").src=entries[i].toLocalURL();
+		                document.getElementById('delete').addEventListener('tap',function(e){
+      			      			this.parentElement.parentElement.parentElement.removeChild(this.parentElement.parentElement);
+				
+				//alert( entries[i].toLocalURL() );
+				//entries[i].remove();
+			});
+		               }
+			document.getElementById("container_pic").style.display='block';
+		}, function ( e ) {
+			alert( "Read entries failed: " + e.message );
+		} );
+	} );
+      		});
+      	*/
+
+			var first = null;
+			mui.back = function() {
+
+				//首次按键，提示‘再按一次退出应用’
+				if(!first) {
+					first = new Date().getTime();
+					mui.toast('再按一次退出应用');
+					setTimeout(function() {
+						first = null;
+					}, 1000);
+				} else {
+					if(new Date().getTime() - first < 1000) {
+						plus.runtime.quit();
+					}
+				}
+
+			};
+		</script>
+		<style type="text/css">
+			#home,
+			#save {
+				top: 5px;
+				color: white;
+				border-radius: 10px;
+				background: -moz-linear-gradient(0deg, cornflowerblue, blue);
+				background: -webkit-linear-gradient(0deg, cornflowerblue, blue);
+				background: -o-linear-gradient(0deg, cornflowerblue, blue);
+			}
+			
+			#Test_Picture {
+				height: 500px;
+				overflow: auto;
+			}
+			
+			#container_pic {
+				display: none;
+			}
+			
+			.del {
+				border-radius: 10px;
+				background: -moz-linear-gradient(0deg, cornflowerblue, blue);
+				background: -webkit-linear-gradient(0deg, cornflowerblue, blue);
+				background: -o-linear-gradient(0deg, cornflowerblue, blue);
+			}
+			
+			.mui-mask {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background-color: #007AFF;
+				z-index: 9999;
+				display: none;
+				opacity: 0.5;
+			}
+			
+			#mask-Pic {
+				position: absolute;
+				width: 700px;
+				height: 700px;
+			}
+			
+			.mui-pics {
+				left: 50px;
+				top: 100px;
+				position: absolute;
+				display: none;
+				z-index: 10000;
+			}
+			
+			.mui-mask {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background-color: #007AFF;
+				z-index: 9999;
+				opacity: 0.5;
+				display: none;
+			}
+			
+			.fi {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+			}
+			
+			#UpLoader {
+				display: none;
+			}
+			
+			#LJ {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="mui-mask">
+			<div class="fi spinner3">
+				<div class="dot1"></div>
+				<div class="dot2"></div>
+			</div>
+		</div>
+		<div class="mui-pics">
+			<img src="" id="mask-Pic" />
+		</div>
+		<header class="mui-bar mui-bar-nav animated fadeInDown">
+			<input type="button" value="保存" class="mui-pull-right" id="save" />
+			<input type="button" value="首页" class="mui-pull-left" id="home" />
+			<!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
+			<h1 class="mui-title" style="color:#0000FF;font-size: larger;">成品入库</h1>
+		</header>
+		<div class="mui-content animated fadeInLeft">
+
+			<div class="imanges" id="container_pic">
+				<ul class="mui-table-view mui-grid-view">
+					plus.storage.setItem("result",1)
+				</ul>
+			</div>
+
+			<div class="mui-content-padded">
+				<div class="mui-input-row mui-btn-primary" style="text-align:center ;color:yellow;border-radius: 5px;height:40px;padding-top: 5px;">请扫描物料条码</div>
+				<input type="text" id="tiao"  name="tiao" onchange="gettiaoxingma()" onkeypress="if(event.keyCode==13) focusAppointInput('rkzdm');">
+
+</div>
+<div class="mui-input-row mui-btn-primary" style="margin-top:-15px;text-align:center ;color:yellow;border-radius: 5px;height:40px;padding-top: 5px;">请扫描库位条码</div>
+				<div class="mui-input-row">
+					<input type="text" id="rkzdm" name="rkzdm" onchange="getcangku()" onkeypress="if(event.keyCode==13) focusAppointInput('rksl');">
+				</div>
+				<div class="mui-input-row mui-btn-primary" style="margin-top:-15px;text-align:center ;color:yellow;border-radius: 5px;height:40px;padding-top: 5px;">请输入入库数量</div>
+				<div class="mui-input-row">
+					<input type="text" id="rksl" name="rksl"  onchange="getunit()"  onkeypress="if(event.keyCode==13) focusAppointInput('save');">
+				</div>
+				<div class="mui-input-row mui-btn-primary" style="text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">物料代码</div>
+				<div class="mui-input-row">
+
+					<input type="text" id="item_code" readonly="readonly" name="item_code">
+
+				</div>
+				<div class="mui-input-row mui-btn-primary" style="margin-top:-15px;text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">物料描述</div>
+				<div class="mui-input-row">
+					<input type="text" id="item_name" readonly="readonly" name="item_name">
+
+				</div>
+				<div class="mui-input-row mui-btn-primary" style="margin-top:-12px;text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">计量单位</div>
+				<div class="mui-input-row">
+					<input type="text" id="metering_unit" name="metering_unit"   >
+				</div>
+				<div class="mui-input-row mui-btn-primary" style="margin-top:-15px;text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">生产订单</div>
+				<div class="mui-input-row">
+					<input type="text" id="scdd" name="scdd" readonly="readonly">
+				</div>
+				<div class="mui-input-row mui-btn-primary" style="margin-top:-15px;text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">机台号</div>
+				<div class="mui-input-row">
+					<input type="text" id="jth" name="jth" readonly="readonly"> 
+				</div>
+				<div class="mui-input-row mui-btn-primary" style="text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">票据日期</div>
+				<div class="mui-input-row">
+
+					<input type="text" id="pjrq" readonly="readonly" name="pjrq">
+
+				</div>
+				<button id='Get_Date' class="mui-btn mui-btn-block mui-btn-primary">仓库</button>
+				<div class="mui-input-row">
+					<input type="text" id="ck" name="ck" readonly="readonly">
+				</div>
+				<button id='Get_Date' class="mui-btn mui-btn-block mui-btn-primary">入库库区</button>
+				<div class="mui-input-row">
+					<input type="text" id="kq" name="kq" readonly="readonly">
+				</div>
+				<div class="mui-input-row mui-btn-primary" style="margin-top:-15px;text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">入库库位</div>
+				<div class="mui-input-row">
+					<input type="text" id="kw" name="kw" readonly="readonly">
+				</div>
+	</body>
+<script>
+			function getunit()
+			{ 
+					var item_code = document.getElementById("item_code").value
+					$.post("http://10.3.105.117:8080/spring-mybatis/getwl", {
+						"item_code": item_code
+					}, function(data) {
+						if(data != null) {
+							var b = data.split("+");
+							$("#item_name").val(b[0]);
+							$("#metering_unit").val(b[1]);
+							}
+						else
+						{
+							alert("该物料不存在");
+						}
+					
+					}, 'json');
+			}
+		</script>
+		<script>
+			function getcangku() {
+				//	document.getElementById("tiao").innerHTML=plus.storage.getItem("result");
+			var rkzdm = document.getElementById("rkzdm").value
+				var b = rkzdm.split("-");
+			 	$("#ck").val(b[0]+"-"+b[1]);
+					$("#kq").val(b[0]+"-"+b[1]+"-"+b[2]);
+						$("#kw").val(rkzdm); 
+							
+				//从条形码中获取相应字段
+				
+			}
+		</script>
+</html>

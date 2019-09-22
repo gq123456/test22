@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
+			<script src="js/jquery-3.3.1.min.js"></script>
+		<script>
+			$(document).ready(function() {
+						$("#logout").click(function() {
+							window.location.href = 'index.html';
+						});
+			});
+		</script>
+<link rel="stylesheet" href="css/animate.css" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<script src="js/mui.js"></script>
+		<script type="text/javascript" charset="utf-8">
+		
+			mui.init();
+			mui.plusReady(function(){
+		document.getElementById("user-name").innerHTML=plus.storage.getItem("username");
+			});
+			var first = null;
+			mui.back = function() {
+				
+					//首次按键，提示‘再按一次退出应用’
+					if (!first) {
+						first = new Date().getTime();
+						
+						mui.toast('再按一次退出应用');
+						setTimeout(function() {
+							first = null;
+						}, 1000);
+					} else {
+						if (new Date().getTime() - first < 1000) {
+							plus.runtime.quit();
+						}
+					}
+				
+			};
+		</script>
+		<style type="text/css">
+			#logout{
+				top:5px;
+				background: -moz-linear-gradient(0deg, cornflowerblue, blue);
+  
+  background: -webkit-linear-gradient(0deg, cornflowerblue, blue);
+  background: -o-linear-gradient(0deg, cornflowerblue, blue);
+				color: white;
+				border-radius: 10px;
+				font:bold;
+			}
+		
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav animated fadeInDown">
+<input type="button" value="退出"  class="mui-pull-right" id="logout"/>
+			<!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
+			<h1 class="mui-title" style="color: dodgerblue;font-size: larger;">导航</h1>
+		</header>
+		<div ms-controller="ctrlmain">
+
+			<div class="mui-bar mui-bar-standard mui-bar-header-secondary">
+				<h4 id="user-name"></h4>
+			</div>
+
+			<div class="mui-content animated fadeInLeft">
+				<ul class="mui-table-view mui-grid-view mui-grid-9">
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<a href="rukusaomiao.html">
+		          
+							<div class="mui-media-body">原材料入库</div>
+						</a>
+					</li>
+
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<a href="chukusaomiao.html">
+						
+							<div class="mui-media-body">原材料出库</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<a href="#">
+						
+							<div class="mui-media-body">成品入库</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<a href="image.html">
+							<div class="mui-media-body">成品出库</div>
+						</a>
+					</li>
+				</ul>
+				<code id="test"></code>
+			</div>
+		</div>
+		
+	</body>
+
+</html>

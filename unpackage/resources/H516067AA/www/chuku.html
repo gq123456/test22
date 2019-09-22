@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="js/tinybox.js" ></script>
+    <script>
+function get(){
+//	document.getElementById("tiao").innerHTML=plus.storage.getItem("result");
+ var url = window.location.href; //获取url中"?"符后的字串
+  var a=url.split("#");
+   var b=url.split("=");
+$("#tiao").val(b[1]);
+}
+	
+
+</script>
+    <script>
+    	function time()
+    	{
+  var myDate = new Date();
+            var a=myDate.getFullYear();    //获取完整的年份(4位,1970-????)
+            var b  = myDate.getMonth();       //获取当前月份(0-11,0代表1月)
+             var c  = myDate.getDate(); 
+             b=b+1;
+    if(b<10 )
+    {
+    document.getElementById("JZYF").value="0"+b;
+    }
+    if(b>10)
+    {
+        document.getElementById("JZYF").value=b;
+    }
+   
+}
+    </script>
+    <script>
+			$(document).ready(function() {
+						$("#home").click(function() {
+							window.location.href = 'nav.html';
+						});
+						
+						$("#save").click(function() {
+				                       alert(1);
+			 							var wuliaodaima=document.getElementById("wuliaodaima").value
+										var wuliaomiaosu=document.getElementById("wuliaomiaosu").value
+										var gysdaima=document.getElementById("gysdaima").value
+										var ruku=document.getElementById("ruku").value
+										var rukukuqu=document.getElementById("rukukuqu").value
+										var rukukuwei=document.getElementById("rukukuwei").value
+										var chukukunumber=document.getElementById("chukukunumber").value
+										var kucunnow=document.getElementById("kucunnow").value
+										var JZYF=document.getElementById("JZYF").value								
+						if(wuliaodaima != "" & gysdaima != "" & ruku != "" & rukukuqu != "" & rukukuwei != "" &
+										rukunumber != "" & picinumber != "" & liaodannumber != "" & JZYF != "") 
+						{
+							if(kucunnow>chukukunumber)
+							{
+							$.post("http://10.7.129.33:8080/spring-mybatis/chuku", {
+												"wuliaodaima": wuliaodaima,
+												"wuliaomiaosu": wuliaomiaosu,
+												"gysdaima": gysdaima,
+												"ruku": ruku,
+												"rukukuqu": rukukuqu,
+												"rukukuwei": rukukuwei,
+												"chukukunumber": chukukunumber,
+												"kucunnow": kucunnow,
+												"JZYF": JZYF,
+											}, function(data) {
+												if(data != null) {
+													alert("保存成功")
+												}
+											},'json');
+							}else
+							{
+								alert("出库数量大于当前库存数")
+							}
+						}else
+						{
+								alert("每一项都必须填写")
+						}
+						
+						
+						});
+						
+			});
+		</script>
+     <script>
+    	function getnum()
+    	{
+ 	$.post("http://192.168.43.128:8080/spring-mybatis/getnum", {
+												"wuliaodaima": wuliaodaima,
+											}, function(data) {
+												$("#kucunnow").val(data);	
+											});		
+}
+    </script>
+    <script>
+     function get()
+     {
+     	alert(1);
+					
+							var wuliaodaima=document.getElementById("wuliaodaima").value
+						$.post("http://192.168.43.128:8080/spring-mybatis/getdesc", {
+												"wuliaodaima": wuliaodaima,
+											}, function(data) {
+												$("#wuliaomiaosu").val(data);	
+											});		
+							
+						
+			}
+    </script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/fakeloader.css" />
+    <link rel="stylesheet" href="css/animate.css" />
+    <script type="text/javascript" charset="utf-8">
+    var url= "http://10.3.41.14:894/web/UpLoad_Pic.aspx";
+    var config={};
+    config.pics=[];
+    config.GZXX="";
+    config.SCCJ="";
+    config.SCPC="";
+    config.Date="";
+    config.SCSL="";
+    config.GZSL="";
+    config.BL="";
+    config.XT="";
+    config.FKRY="";
+    config.SCX="";
+    config.XZ="";
+    config.SSLX="";
+    config.SSSJ="";
+    config.SSRS="";
+    
+    
+      	mui.init();
+      	mui.plusReady(function(){
+      		
+      		var d=new Date();
+var day=d.getDate();
+var month=d.getMonth() + 1;
+var year=d.getFullYear();
+config.user=plus.storage.getItem("username");
+//保存数据
+document.getElementById("save1").addEventListener("tap",function(e){
+	//alert("1");
+	if(document.getElementsByTagName("ul")[0].children.length==0)
+	{
+		alert("未上传图片！");
+		return;
+	}
+	else
+	{
+		config.pics=[];
+	alert(document.getElementsByTagName("ul")[0].getElementsByTagName("img").length);
+	var i;
+	for(i=0;i<document.getElementsByTagName("ul")[0].getElementsByTagName("img").length;i++){
+	config.pics[i]=document.getElementsByTagName("ul")[0].getElementsByTagName("img")[i].src;
+	}
+	}
+	if(document.getElementById("GZXX").value=="")
+	{
+		alert("故障现象不能为空！");
+		return;
+	}
+	else{
+		config.GZXX=document.getElementById("GZXX").value;
+	}
+	if(document.getElementById("SCCJ").value=="")
+	{
+		alert("生产厂家不能为空！");
+		return;
+	}
+	else{
+		config.SCCJ=document.getElementById("SCCJ").value;
+	}
+	if(document.getElementById("SCPC").value=="")
+	{
+		alert("生产批次不能为空！");
+		return;
+	}
+	else{
+		config.SCPC=document.getElementById("SCPC").value;
+	}
+	if(document.getElementById("Date").value=="")
+	{
+		alert("生产日期不能为空！");
+		return;
+	}
+	else{
+		config.Date=document.getElementById("Date").value;
+	}
+	if(document.getElementById("SCSL").value=="")
+	{
+		alert("生产数量不能为空！");
+		return;
+	}
+	else{
+		config.SCSL=document.getElementById("SCSL").value;
+	}
+	if(document.getElementById("GZSL").value=="")
+	{
+		alert("故障数量不能为空！");
+		return;
+	}
+	else{
+		config.GZSL=document.getElementById("GZSL").value;
+	}
+	
+	if(document.getElementById("BL").value=="")
+	{
+		alert("比例不能为空！");
+		return;
+	}
+	else{
+		config.BL=document.getElementById("BL").value;
+	}
+	if(document.getElementById("XT").value=="")
+	{
+		alert("线体不能为空！");
+		return;
+	}
+	else{
+		config.BL=document.getElementById("XT").value;
+	}
+	if(document.getElementById("FKRY").value=="")
+	{
+		alert("反馈人员不能为空！");
+		return;
+	}
+	else{
+		config.FKRY=document.getElementById("FKRY").value;
+	}
+	if(document.getElementById("SCX").value=="")
+	{
+		alert("生产线不能为空！");
+		return;
+	}
+	else{
+		config.SCX=document.getElementById("SCX").value;
+	}
+	if(document.getElementById("XZ").value=="")
+	{
+		alert("线长不能为空！");
+		return;
+	}
+	else{
+		config.XZ=document.getElementById("XZ").value;
+	}
+	if(document.getElementById("SSLX").value=="")
+	{
+		alert("损失类型不能为空！");
+		return;
+	}
+	else{
+		config.SSLX=document.getElementById("SSLX").value;
+	}
+	if(document.getElementById("SSSJ").value=="")
+	{
+		alert("损失时间不能为空！");
+		return;
+	}
+	else{
+		config.SSSJ=document.getElementById("SSSJ").value;
+	}
+	if(document.getElementById("SSRS").value=="")
+	{
+		alert("损失人数不能为空！");
+		return;
+	}
+	else{
+		config.SSRS=document.getElementById("SSRS").value;
+	}
+	var w = plus.nativeUI.showWaiting( "等待中..." );
+	
+	var task = plus.uploader.createUpload( url, {}, function ( t, status ) {
+		// 上传完成
+		if ( status == 200 ) {
+			
+			w.close();
+			alert( "Upload success: " + t.url );
+			mui.openWindow({
+							id: 'nav.html',
+							url: 'nav.html',
+							show:{
+      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+      aniShow:"slide-in-left",//页面显示动画，默认为”slide-in-right“；
+      duration:300//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+    },
+							waiting: {
+								autoShow: true,
+								 title:'正在加载...',
+							}
+						});
+			
+			
+		} else {
+			w.close();
+			alert( "Upload failed: " + status );
+		}
+	});
+	var imgs=document.getElementsByTagName("ul")[0].getElementsByTagName("img");
+	for(var i=0;i<imgs.length;i++)
+	{
+	task.addFile( imgs[i].src,{});
+	}
+	task.addData( "string_key", JSON.stringify(config) );
+	task.start();
+//alert(JSON.stringify(config));
+	
+	
+	
+});
+      		//返回首页
+      		document.getElementById("home").addEventListener("tap",function(e){
+      			alert(1);
+      			 var btn = ["确定","取消"];
+					  mui.confirm('关闭当前窗口之前，请确认数据已保存！','警告',btn,function(e){
+					    if(e.index==0){
+					    	mui.openWindow({
+							id: 'nav.html', 
+							url: 'nav.html',
+							show:{
+      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+      aniShow:"slide-in-bottom",//页面显示动画，默认为”slide-in-right“；
+      duration:200//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+    },
+							waiting: {
+								autoShow: true,
+								 title:'正在加载...',
+							}
+						});
+					    }
+					  });
+      		});
+      		
+      		document.getElementById("LJ").addEventListener("tap",function(e){
+      		/*	var $li='<li class="mui-table-view-cell mui-media mui-col-xs-6">'+
+		                '<img class="mui-media-object" src="" id="Test_Picture">'+
+		                '<div><input type="button" class="del" name="删除" id="delete" value="删除"/></div>'+
+		                '</li>';
+		                alert($li);
+		           */     
+      			plus.io.requestFileSystem( plus.io.PUBLIC_DOWNLOADS, function( fs ) {
+							var directoryReader = fs.root.createReader();
+		directoryReader.readEntries( function( entries ){			
+			var i;
+			alert(entries.length);
+			alert(config.y);
+			for( i=0; i < entries.length; i++ ) {
+				//var tmp_li=document.createElement("li");
+				//tmp_li.className+="mui-table-view-cell mui-media mui-col-xs-6";
+				//tmp_li.innerHTML='<img class="mui-media-object" src="">'+
+		               // '<div><input type="button" class="del" name="删除"  value="删除"/></div>';
+		              //alert(tmp_li.className);
+		               // document.getElementsByTagName('ul')[0].appendChild(tmp_li);
+		               // tmp_li.getElementsByTagName('img')[0].src=entries[i].toLocalURL();
+		                //document.getElementById("Test_Picture").src=entries[i].toLocalURL();
+		               // tmp_li.getElementsByClassName('del')[0].addEventListener('tap',function(e){
+      			      			//this.parentElement.parentElement.parentElement.removeChild(this.parentElement.parentElement);
+				
+				//alert( entries[i].toLocalURL() );
+				//entries[i].remove();
+			//});
+			entries[i].remove();
+		               }
+			//document.getElementById("container_pic").style.display='block';
+		}, function ( e ) {
+			alert( "Read entries failed: " + e.message );
+		} );
+	} );
+      		});
+      	});
+   /*   	document.getElementById("LJ").addEventListener("tap",function(e){
+      			var $li='<li class="mui-table-view-cell mui-media mui-col-xs-6">'+
+		                '<img class="mui-media-object" src="" id="Test_Picture">'+
+		                '<div><input type="button" class="del" name="删除" id="delete" value="删除"/></div>'+
+		                '</li>';
+		                alert($li);
+		                
+      			plus.io.requestFileSystem( plus.io.PUBLIC_DOWNLOADS, function( fs ) {
+							var directoryReader = fs.root.createReader();
+		directoryReader.readEntries( function( entries ){			
+			var i;
+			for( i=0; i < entries.length; i++ ) {
+				var tmp_li=document.createElement("li");
+				tmp_li.className+="mui-table-view-cell mui-media mui-col-xs-6";
+				tmp_li.innerHTML='<img class="mui-media-object" src="" id="Test_Picture">'+
+		                '<div><input type="button" class="del" name="删除" id="delete" value="删除"/></div>';
+		                document.getElementsByName("ul").appendChild(tmp_li);
+		                document.getElementById("Test_Picture").src=entries[i].toLocalURL();
+		                document.getElementById('delete').addEventListener('tap',function(e){
+      			      			this.parentElement.parentElement.parentElement.removeChild(this.parentElement.parentElement);
+				
+				//alert( entries[i].toLocalURL() );
+				//entries[i].remove();
+			});
+		               }
+			document.getElementById("container_pic").style.display='block';
+		}, function ( e ) {
+			alert( "Read entries failed: " + e.message );
+		} );
+	} );
+      		});
+      	*/
+      	
+      	
+      	
+      	
+      	
+      	
+      	var first = null;
+			mui.back = function() {
+				
+					//首次按键，提示‘再按一次退出应用’
+					if (!first) {
+						first = new Date().getTime();
+						mui.toast('再按一次退出应用');
+						setTimeout(function() {
+							first = null;
+						}, 1000);
+					} else {
+						if (new Date().getTime() - first < 1000) {
+							plus.runtime.quit();
+						}
+					}
+				
+			};
+    </script>
+    <style type="text/css">
+    	#home,#save{
+				top:5px;
+				color: white;
+				border-radius: 10px;
+				background: -moz-linear-gradient(0deg, cornflowerblue, blue);
+  
+  background: -webkit-linear-gradient(0deg, cornflowerblue, blue);
+  background: -o-linear-gradient(0deg, cornflowerblue, blue);
+			}
+			#Test_Picture{
+				height: 500px;
+				overflow: auto;
+			}
+			#container_pic{
+				display: none;
+			}
+			.del{								
+				border-radius: 10px;
+				background: -moz-linear-gradient(0deg, cornflowerblue, blue); 
+  background: -webkit-linear-gradient(0deg, cornflowerblue, blue);
+  background: -o-linear-gradient(0deg, cornflowerblue, blue);
+			}
+			.mui-mask{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color:#007AFF;
+		z-index: 9999;
+		display: none;
+		opacity: 0.5;
+		}
+		#mask-Pic{
+			position: absolute;
+			width: 700px;
+			height: 700px;
+		}
+		.mui-pics{
+			left:50px;
+			top:100px;
+			position: absolute;
+			display:none;
+			z-index: 10000;
+		}
+		.mui-mask{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color:#007AFF;
+		z-index: 9999;
+		opacity: 0.5;
+		display:none;
+	}
+	.fi{
+		position:absolute;
+                left:50%;
+                top:50%;
+	}
+	#UpLoader{
+		display: none;
+	}
+	#LJ{
+		display: none;
+	}
+    </style>
+</head>
+<body>
+	
+	<div class="mui-mask">
+		<div class="fi spinner3"><div class="dot1"></div><div class="dot2"></div></div>
+	</div>
+	<div class="mui-pics">
+	<img src="" id="mask-Pic" />
+	</div>
+	<header class="mui-bar mui-bar-nav animated fadeInDown">
+<input type="button" value="保存"  class="mui-pull-right" id="save"/>
+<input type="button" value="首页"  class="mui-pull-left" id="home"/>
+			<!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
+			<h1 class="mui-title" style="color: dodgerblue;font-size: larger;">原材料出库</h1>
+		</header>
+		<div class="mui-content animated fadeInLeft">
+			
+			<div class="imanges" id="container_pic">
+				<ul class="mui-table-view mui-grid-view">
+		       
+		   </ul>    
+			</div>
+			<div class="mui-content-padded">
+	<div class="mui-input-row mui-btn-primary" style="text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">获取条形码</div>
+	<input type="text" id="tiao" readonly="readonly"  name="tiao">
+</div>
+				<div class="mui-input-row mui-btn-primary" style="text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">物料代码</div>
+				<div class="mui-input-row">
+					
+		<input type="text"  id="wuliaodaima"  readonly="readonly" name="wuliaodaima" >			
+		
+	</div>
+	</div>
+				<div class="mui-input-row mui-btn-primary" style="text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">物料描述</div>
+				<div class="mui-input-row">
+					
+		<input type="text"  id="wuliaomiaosu"  readonly="readonly" name="wuliaomiaosu"  onmousemove="get()" >			
+		
+	</div>
+	<div class="mui-input-row mui-btn-primary" style="margin-top:-15px;text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">供应商代码</div>
+	<div class="mui-input-row">
+	<input type="text"  id="gysdaima"  readonly="readonly"  name="gysdaima" >	
+	
+	
+	</div>
+	<div class="mui-input-row mui-btn-primary" style="margin-top:-12px;text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">入库仓库</div>
+	<div class="mui-input-row">
+		<input type="text"  id="ruku"   name="ruku" >	
+	</div>
+	<button id='Get_Date' class="mui-btn mui-btn-block mui-btn-primary">入库库区</button>
+	<div class="mui-input-row">
+<input type="text"  id="rukukuqu"   name="rukukuqu" >	
+	</div>
+	<div class="mui-input-row mui-btn-primary" style="margin-top:-12px;text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">入库库位</div>
+	<div class="mui-input-row">
+		<input type="text"  id="rukukuwei"   name="rukukuwei" readonly="readonly">	
+	</div>
+	<div class="mui-input-row mui-btn-primary" style="margin-top:-15px;text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">出库数量</div>
+	<div class="mui-input-row">
+	<input type="text"  id="chukukunumber"  name="chukukunumber"  >	
+	</div>
+	<div class="mui-input-row mui-btn-primary" style="margin-top:-15px;text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">当前库存数</div>
+	<div class="mui-input-row">
+	<input type="text"  id="kucunnow" name="kucunnow"   onmousemove="getnum()">	
+	</div>
+	<div class="mui-input-row mui-btn-primary" style="margin-top:-15px;text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">记账月份</div>
+	<div class="mui-input-row">
+	<input type="text"  id="JZYF"   onmousemove="time()" name="JZYF" > 
+	</div>
+
+<!--<div class="mui-input-row mui-btn-primary" style="margin-top:-15px;text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">票据单号</div>
+	<div class="mui-input-row">
+	<input type="text"  id="liaodannumber"   >	
+	</div>
+	<div class="mui-input-row mui-btn-primary" style="margin-top:-15px;text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">票据日期</div>
+	<div class="mui-input-row">
+	<input type="text"  id="liaodannumber"   >	
+	</div>
+	<div class="mui-input-row mui-btn-primary" style="margin-top:-15px;text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">备注</div>
+	<div class="mui-input-row">
+	<input type="text"  id="liaodannumber"   >	
+	</div>
+	
+	<div class="mui-input-row mui-btn-primary" style="margin-top:-15px;text-align:center ;color:white;border-radius: 5px;height:40px;padding-top: 5px;">出库类型</div>
+	<div class="mui-input-row">
+	<select  name="select" id="select" style="width: 150px;height: 25px;text-align: center;">
+					<option>请选择</option>
+					<option selected="selected" value="客户代码">客户代码</option>
+					<option value="供应商">供应商</option>
+					<option value="班组">班组</option>
+			</select><br>
+	</div>-->
+	
+	<button id='UpLoader' class="mui-btn mui-btn-block mui-btn-primary">上传图片</button>
+			</div>
+			</div>
+</body>
+</html>
